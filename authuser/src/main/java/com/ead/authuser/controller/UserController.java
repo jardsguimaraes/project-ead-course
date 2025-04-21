@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.repository.UserRepository;
+import com.ead.authuser.services.UserService;
 
 @RestController
 @RequestMapping("users")
@@ -22,6 +23,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
     public ResponseEntity<List<UserModel>> getAllUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
@@ -29,12 +33,13 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<Object> getOneUser(@PathVariable(value = "userId") UUID userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(userRepository.findById(userId).get());
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserFindById(userId).get());
+
     }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Object> deleteUser(@PathVariable(value = "userId") UUID userId) {
-        userRepository.deleteById(userId);
+        userRepository.delete(userService.getUserFindById(userId).get());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
