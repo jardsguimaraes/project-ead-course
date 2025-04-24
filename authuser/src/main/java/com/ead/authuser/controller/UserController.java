@@ -1,9 +1,10 @@
 package com.ead.authuser.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -32,8 +33,9 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserModel>> getAllUsers() {
-        return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
+    public ResponseEntity<Page<UserModel>> getAllUsers(Pageable pageable) {
+        Page<UserModel> userModelPage = userRepository.findAll(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
     }
 
     @GetMapping("/{userId}")
