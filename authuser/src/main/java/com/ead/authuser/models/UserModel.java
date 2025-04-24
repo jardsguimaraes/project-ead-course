@@ -38,7 +38,10 @@ public class UserModel implements Serializable {
     @Column(name = "user_id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     private UUID userId;
 
+    @Column(nullable = false, unique = true, length = 50)
     private String username;
+
+    @Column(nullable = false, unique = true, length = 50)
     private String email;
 
     @JsonIgnore
