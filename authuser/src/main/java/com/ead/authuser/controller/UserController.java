@@ -1,5 +1,7 @@
 package com.ead.authuser.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ import com.ead.authuser.services.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 // @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
@@ -37,6 +39,12 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(EspecificationTemplate.UserSpec spec, Pageable pageable) {
         Page<UserModel> userModelPage = userRepository.findAll(spec,pageable);
+
+        if (!userModelPage.isEmpty()) {
+            for (UserModel user : userModelPage.toList()) {
+                user.add(linkTo(methodOn(UserController.class).getOneUser(user.getUserId())).withSelfRel());
+            }
+        }
         return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
     }
 

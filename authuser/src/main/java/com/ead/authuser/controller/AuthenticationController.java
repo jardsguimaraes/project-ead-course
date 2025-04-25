@@ -15,7 +15,7 @@ import com.ead.authuser.services.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class AuthenticationController {
 
     @Autowired
