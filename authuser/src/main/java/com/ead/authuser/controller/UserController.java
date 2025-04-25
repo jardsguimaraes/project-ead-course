@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ead.authuser.dtos.UserRecordDto;
+import com.ead.authuser.especifications.EspecificationTemplate;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.repository.UserRepository;
 import com.ead.authuser.services.UserService;
@@ -34,8 +35,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<Page<UserModel>> getAllUsers(Pageable pageable) {
-        Page<UserModel> userModelPage = userRepository.findAll(pageable);
+    public ResponseEntity<Page<UserModel>> getAllUsers(EspecificationTemplate.UserSpec spec, Pageable pageable) {
+        Page<UserModel> userModelPage = userRepository.findAll(spec,pageable);
         return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
     }
 
