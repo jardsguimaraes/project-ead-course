@@ -38,7 +38,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(EspecificationTemplate.UserSpec spec, Pageable pageable) {
-        Page<UserModel> userModelPage = userRepository.findAll(spec,pageable);
+        Page<UserModel> userModelPage = userRepository.findAll(spec, pageable);
 
         if (!userModelPage.isEmpty()) {
             for (UserModel user : userModelPage.toList()) {
