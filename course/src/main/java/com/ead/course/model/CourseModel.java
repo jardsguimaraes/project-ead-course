@@ -74,5 +74,10 @@ public class CourseModel implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
+    // Exemplo de uso do @OnDelete, onde ao deletar o curso, deleta os módulos
+    // e as aulas que estão associados a ele. Mas não é uma boa prática
+    // porque pode causar problemas de integridade referencial, pois não
+    // temos o controle do que está sendo deletado.
+    // @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<ModuleModel> modules;
 }
