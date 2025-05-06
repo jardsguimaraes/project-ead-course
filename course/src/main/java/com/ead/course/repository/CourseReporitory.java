@@ -10,4 +10,6 @@ import com.ead.course.model.CourseModel;
 public interface CourseReporitory extends JpaRepository<CourseModel, UUID> {
 
     void delete(@NonNull CourseModel courseModel);
+
+    boolean existsByName(String name);
 }

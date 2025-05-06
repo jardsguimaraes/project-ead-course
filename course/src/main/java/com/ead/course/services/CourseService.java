@@ -1,17 +1,25 @@
 package com.ead.course.services;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ead.course.dtos.CourseRecordDto;
 import com.ead.course.model.CourseModel;
 import com.ead.course.model.LessonModel;
 import com.ead.course.model.ModuleModel;
 import com.ead.course.repository.CourseReporitory;
 import com.ead.course.repository.LessonRepository;
 import com.ead.course.repository.ModuleRepository;
+
+import jakarta.validation.Valid;
 
 @Service
 public class CourseService {
@@ -41,5 +49,30 @@ public class CourseService {
         }
 
         courseReporitory.delete(courseModel);
+    }
+
+    public CourseModel save(CourseRecordDto courseRecordDto) {
+        var courseModel = new CourseModel();
+        BeanUtils.copyProperties(courseRecordDto, courseModel);
+        courseModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
+        courseModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
+
+        return courseReporitory.save(courseModel);
+    }
+
+    public Optional<CourseModel> getCourseFindById(UUID courseId) {
+        Optional<CourseModel> courseModelOptinal = courseReporitory.findById(courseId);
+
+        if (courseModelOptinal.isEmpty()) {
+            // exception
+        }
+
+        return courseModelOptinal;
+    }
+
+    public CourseModel update(CourseRecordDto courseRecordDto, CourseModel courseModel) {
+        BeanUtils.copyProperties(courseRecordDto, courseModel);
+        courseModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
+        return courseReporitory.save(courseModel);
     }
 }
