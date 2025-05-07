@@ -19,8 +19,6 @@ import com.ead.course.repository.CourseReporitory;
 import com.ead.course.repository.LessonRepository;
 import com.ead.course.repository.ModuleRepository;
 
-import jakarta.validation.Valid;
-
 @Service
 public class CourseService {
 
