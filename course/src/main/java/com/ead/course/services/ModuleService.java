@@ -18,8 +18,6 @@ import com.ead.course.model.ModuleModel;
 import com.ead.course.repository.LessonRepository;
 import com.ead.course.repository.ModuleRepository;
 
-import jakarta.validation.Valid;
-
 @Service
 public class ModuleService {
 
@@ -57,7 +55,7 @@ public class ModuleService {
         Optional<ModuleModel> moduleRepositoryOptional = moduleRepository.findModuleIntoCourse(courseId, moduleId);
 
         if (moduleRepositoryOptional.isEmpty()) {
-            //Exception
+            // Exception
         }
         return moduleRepositoryOptional;
     }
@@ -65,5 +63,13 @@ public class ModuleService {
     public ModuleModel update(ModuleRecordDto moduleRecordDto, ModuleModel moduleModel) {
         BeanUtils.copyProperties(moduleRecordDto, moduleModel);
         return moduleRepository.save(moduleModel);
+    }
+
+    public Optional<ModuleModel> findByID(UUID moduleId) {
+        Optional<ModuleModel> moduleRepositoryOptional = moduleRepository.findById(moduleId);
+        if (moduleRepositoryOptional.isEmpty()) {
+            // Exception
+        }
+        return moduleRepositoryOptional;
     }
 }

@@ -1,6 +1,7 @@
 package com.ead.course.repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,8 @@ public interface LessonRepository extends JpaRepository<LessonModel, UUID> {
 
     @Query(value = "SELECT * FROM tb_lessons WHERE module_module_id = :moduleId", nativeQuery = true)
     List<LessonModel> findAllLessonsIntoModule(@Param("moduleId") UUID moduleId);
+
+    @Query(value = "SELECT * FROM tb_lessons WHERE module_module_id = :moduleId AND lesson_id = :lessonId", nativeQuery = true)
+    Optional<LessonModel> findLessonsIntoModule(@Param("moduleId") UUID moduleId, @Param("lessonId")  UUID lessonId);
 
 }

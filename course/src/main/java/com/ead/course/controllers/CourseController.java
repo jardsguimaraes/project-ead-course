@@ -53,7 +53,7 @@ public class CourseController {
 
     @DeleteMapping("/{courseId}")
     public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId") UUID courseId) {
-        courseReporitory.delete(courseService.getCourseFindById(courseId).get());
+        courseService.delete(courseService.getCourseFindById(courseId).get());
         return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully!");
     }
 

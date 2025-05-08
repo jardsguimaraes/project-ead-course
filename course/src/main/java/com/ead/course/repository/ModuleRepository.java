@@ -22,5 +22,5 @@ public interface ModuleRepository extends JpaRepository<ModuleModel, UUID> {
     List<ModuleModel> findAllModulesIntoCourse(@Param("courseId") UUID courseId);
 
     @Query(value = "SELECT * FROM tb_modules WHERE course_course_id = :courseId AND module_id = :moduleId", nativeQuery = true)
-    Optional<ModuleModel> findModuleIntoCourse(UUID courseId, UUID moduleId);
+    Optional<ModuleModel> findModuleIntoCourse(@Param("courseId") UUID courseId, @Param("moduleId") UUID moduleId);
 }
