@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ead.course.dtos.CourseRecordDto;
+import com.ead.course.exceptions.NotFoundException;
 import com.ead.course.model.CourseModel;
 import com.ead.course.model.LessonModel;
 import com.ead.course.model.ModuleModel;
@@ -62,7 +63,7 @@ public class CourseService {
         Optional<CourseModel> courseModelOptinal = courseReporitory.findById(courseId);
 
         if (courseModelOptinal.isEmpty()) {
-            // exception
+            throw new NotFoundException("Error: Course not found");
         }
 
         return courseModelOptinal;

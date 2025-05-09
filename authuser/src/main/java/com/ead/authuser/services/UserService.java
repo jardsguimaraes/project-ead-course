@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.ead.authuser.dtos.UserRecordDto;
 import com.ead.authuser.enums.UserStatus;
 import com.ead.authuser.enums.UserType;
-import com.ead.authuser.exceptions.ValidationException;
+import com.ead.authuser.exceptions.NotFoundException;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.repository.UserRepository;
 
@@ -26,7 +26,7 @@ public class UserService {
         Optional<UserModel> userModelOptinal = userRepository.findById(userId);
 
         if (userModelOptinal.isEmpty()) {
-            throw new ValidationException("Error User not found.");
+            throw new NotFoundException("Error User not found.");
         }
 
         return userModelOptinal;

@@ -9,15 +9,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record CourseRecordDto(
-    @NotBlank(message = "Course name is required")
+    @NotBlank(message = "Name is mandatory")
     String name,
-    @NotBlank(message = "Course description is required")
+    @NotBlank(message = "Description is mandatory")
     String description,
-    @NotNull(message = "Course description is required")
+    @NotNull(message = "CourseStuatus is mandatory")
     CourseStatus courseStatus,
-    @NotNull(message = "Course level is required")
+    @NotNull(message = "CourseLevel is mandatory")
     CourseLevel courseLevel,
-    @NotNull(message = "User instructor is required")
+    @NotNull(message = "UserInstructor is mandatory")
     UUID userInstructor,
     String imageUrl) {
 }

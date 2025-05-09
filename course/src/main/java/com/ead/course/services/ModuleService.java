@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ead.course.dtos.ModuleRecordDto;
+import com.ead.course.exceptions.NotFoundException;
 import com.ead.course.model.CourseModel;
 import com.ead.course.model.LessonModel;
 import com.ead.course.model.ModuleModel;
@@ -55,7 +56,7 @@ public class ModuleService {
         Optional<ModuleModel> moduleRepositoryOptional = moduleRepository.findModuleIntoCourse(courseId, moduleId);
 
         if (moduleRepositoryOptional.isEmpty()) {
-            // Exception
+            throw new NotFoundException("Error: Module not found for this course");
         }
         return moduleRepositoryOptional;
     }
@@ -68,7 +69,7 @@ public class ModuleService {
     public Optional<ModuleModel> findByID(UUID moduleId) {
         Optional<ModuleModel> moduleRepositoryOptional = moduleRepository.findById(moduleId);
         if (moduleRepositoryOptional.isEmpty()) {
-            // Exception
+            throw new NotFoundException("Error: Module not found");
         }
         return moduleRepositoryOptional;
     }

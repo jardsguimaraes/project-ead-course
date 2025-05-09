@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ead.course.dtos.LessonRecordDto;
+import com.ead.course.exceptions.NotFoundException;
 import com.ead.course.model.LessonModel;
 import com.ead.course.model.ModuleModel;
 import com.ead.course.repository.LessonRepository;
@@ -38,7 +39,7 @@ public class LessonService {
         Optional<LessonModel> lessonRepositoryOptional = lessonRepository.findLessonsIntoModule(moduleId, lessonId);
 
         if (lessonRepositoryOptional.isEmpty()) {
-            // Exception
+            throw new NotFoundException("Error: Lesson not found for this module");
         }
         return lessonRepositoryOptional;
     }
