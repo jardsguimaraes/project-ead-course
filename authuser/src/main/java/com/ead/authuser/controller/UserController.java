@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ead.authuser.dtos.UserRecordDto;
 import com.ead.authuser.especifications.EspecificationTemplate;
 import com.ead.authuser.models.UserModel;
-import com.ead.authuser.repository.UserRepository;
 import com.ead.authuser.services.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -31,14 +30,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserService userService;
 
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(EspecificationTemplate.UserSpec spec, Pageable pageable) {
-        Page<UserModel> userModelPage = userRepository.findAll(spec, pageable);
+        Page<UserModel> userModelPage = userService.getFindAll(spec, pageable);
 
         if (!userModelPage.isEmpty()) {
             for (UserModel user : userModelPage.toList()) {
@@ -56,7 +52,7 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Object> deleteUser(@PathVariable(value = "userId") UUID userId) {
-        userRepository.delete(userService.getUserFindById(userId).get());
+        userService.delete(userId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

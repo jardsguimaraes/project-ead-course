@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ead.course.dtos.CourseRecordDto;
 import com.ead.course.model.CourseModel;
-import com.ead.course.repository.CourseReporitory;
 import com.ead.course.services.CourseService;
 import com.ead.course.specifications.SpecificationTemplate;
 
@@ -31,12 +30,9 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @Autowired
-    private CourseReporitory courseReporitory;
-
     @PostMapping
     public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseRecordDto courseRecordDto) {
-        if (courseReporitory.existsByName(courseRecordDto.name())) {
+        if (courseService.existsByName(courseRecordDto.name())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Course name is Already Taken!");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(courseRecordDto));
@@ -44,7 +40,7 @@ public class CourseController {
 
     @GetMapping
     public ResponseEntity<Page<CourseModel>> getAllCourses(SpecificationTemplate.CourseSpec spec, Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(courseReporitory.findAll(spec, pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.getFindAll(spec, pageable));
     }
 
     @GetMapping("/{courseId}")

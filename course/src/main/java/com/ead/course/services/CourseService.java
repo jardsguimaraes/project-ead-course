@@ -8,6 +8,8 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ import com.ead.course.model.ModuleModel;
 import com.ead.course.repository.CourseReporitory;
 import com.ead.course.repository.LessonRepository;
 import com.ead.course.repository.ModuleRepository;
+import com.ead.course.specifications.SpecificationTemplate.CourseSpec;
 
 @Service
 public class CourseService {
@@ -73,5 +76,13 @@ public class CourseService {
         BeanUtils.copyProperties(courseRecordDto, courseModel);
         courseModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
         return courseReporitory.save(courseModel);
+    }
+
+    public boolean existsByName(String name) {
+        return courseReporitory.existsByName(name);
+    }
+
+    public Page<CourseModel> getFindAll(CourseSpec spec, Pageable pageable) {
+        return courseReporitory.findAll(spec, pageable);
     }
 }
