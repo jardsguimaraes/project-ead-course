@@ -1,5 +1,7 @@
 package com.ead.course.controllers;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +45,18 @@ public class ModuleController {
         @GetMapping("/courses/{courseId}/modules")
         public ResponseEntity<Page<ModuleModel>> getAllModule(@PathVariable(value = "courseId") UUID courseId,
                         SpecificationTemplate.ModuleSpec spec, Pageable pageable) {
-                return ResponseEntity.status(HttpStatus.OK)
-                                .body(moduleService.findAllModulesIntoCourse(
-                                                SpecificationTemplate.moduleCourseId(courseId).and(spec),
-                                                pageable));
+                Page<ModuleModel> moduleModelPage = moduleService.findAllModulesIntoCourse(
+                                SpecificationTemplate.moduleCourseId(courseId).and(spec),
+                                pageable);
+
+                if (!moduleModelPage.isEmpty()) {
+                        for (ModuleModel module : moduleModelPage.toList()) {
+                                module.add(linkTo(methodOn(ModuleController.class)
+                                                .getOneModule(courseId, module.getModuleId())).withSelfRel());
+                        }
+
+                }
+                return ResponseEntity.status(HttpStatus.OK).body(moduleModelPage);
         }
 
         @GetMapping("/courses/{courseId}/modules/{moduleId}")

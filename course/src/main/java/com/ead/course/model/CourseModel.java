@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.hateoas.RepresentationModel;
 
 import com.ead.course.enums.CourseLevel;
 import com.ead.course.enums.CourseStatus;
@@ -35,7 +36,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CourseModel implements Serializable {
+public class CourseModel extends RepresentationModel<CourseModel> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
