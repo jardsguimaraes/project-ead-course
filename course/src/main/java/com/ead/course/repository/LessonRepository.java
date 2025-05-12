@@ -5,12 +5,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ead.course.model.LessonModel;
 
-public interface LessonRepository extends JpaRepository<LessonModel, UUID> {
+public interface LessonRepository extends JpaRepository<LessonModel, UUID>, JpaSpecificationExecutor<LessonModel> {
 
     @Query(value = "SELECT * FROM tb_lessons WHERE module_module_id = :moduleId", nativeQuery = true)
     List<LessonModel> findAllLessonsIntoModule(@Param("moduleId") UUID moduleId);

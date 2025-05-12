@@ -47,10 +47,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErroResponse> handleIvalidFormatException(HttpMessageNotReadableException ex) {
         Map<String, String> erros = new HashMap<>();
-        if (ex.getCause() instanceof InvalidFormatException) {
-            InvalidFormatException invalidFormatEx = (InvalidFormatException) ex.getCause();
-            if (invalidFormatEx.getTargetType() != null && invalidFormatEx.getTargetType().isEnum()) {
-                String FieldName = invalidFormatEx.getPath().get(invalidFormatEx.getPath().size() -1).getFieldName();
+        if (ex.getCause() instanceof InvalidFormatException invalidFormatException) {
+            if (invalidFormatException.getTargetType() != null && invalidFormatException.getTargetType().isEnum()) {
+                String FieldName = invalidFormatException.getPath().get(invalidFormatException.getPath().size() -1).getFieldName();
                 String errorMessage = ex.getMessage();
                 erros.put(FieldName, errorMessage);
             }
