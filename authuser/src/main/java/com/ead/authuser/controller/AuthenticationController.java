@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ead.authuser.dtos.UserRecordDto;
-import com.ead.authuser.repository.UserRepository;
 import com.ead.authuser.services.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -21,18 +20,15 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    UserRepository userRepository;
-
     @PostMapping("/signup")
     public ResponseEntity<Object> registerUser(
             @RequestBody @Validated(UserRecordDto.UserView.RegistrationPost.class) @JsonView(UserRecordDto.UserView.RegistrationPost.class) UserRecordDto userRecordDto) {
 
-        if (userRepository.existsByUsername(userRecordDto.username())) {
+        if (userService.existsByUsername(userRecordDto.username())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error Username is Already Taken!");
         }
 
-        if (userRepository.existsByEmail(userRecordDto.email())) {
+        if (userService.existsByEmail(userRecordDto.email())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error Email is Already Taken!");
         }
 

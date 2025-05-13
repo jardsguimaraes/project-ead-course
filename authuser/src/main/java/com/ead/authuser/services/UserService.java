@@ -75,4 +75,12 @@ public class UserService {
     public void delete(UUID userId) {
         userRepository.delete(getUserFindById(userId).get());
     }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }
