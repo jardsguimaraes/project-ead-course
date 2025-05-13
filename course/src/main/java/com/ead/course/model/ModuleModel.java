@@ -9,7 +9,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -48,7 +47,8 @@ public class ModuleModel extends RepresentationModel<ModuleModel> implements Ser
     private String description;
 
     @Column(name = "created_at", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =
+    // "dd-MM-yyyy'T'HH:mm:ss")
     private LocalDateTime creationDate;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

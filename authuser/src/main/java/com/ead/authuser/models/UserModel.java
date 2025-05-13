@@ -8,7 +8,6 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.ead.authuser.enums.UserStatus;
 import com.ead.authuser.enums.UserType;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -64,11 +63,13 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     private String imageUrl;
 
     @Column(name = "created_at", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =
+    // "dd-MM-yyyy'T'HH:mm:ss")
     private LocalDateTime creationDate;
 
     @Column(name = "updated_at", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =
+    // "dd-MM-yyyy'T'HH:mm:ss")
     private LocalDateTime lastUpdateDate;
 
 }

@@ -11,7 +11,6 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.ead.course.enums.CourseLevel;
 import com.ead.course.enums.CourseStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -51,11 +50,13 @@ public class CourseModel extends RepresentationModel<CourseModel> implements Ser
     private String description;
 
     @Column(name = "created_at", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =
+    // "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime creationDate;
 
     @Column(name = "updated_at", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =
+    // "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime lastUpdateDate;
 
     @Column(nullable = false)
