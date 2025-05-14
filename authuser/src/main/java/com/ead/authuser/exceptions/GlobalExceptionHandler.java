@@ -10,12 +10,16 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErroResponse> handleNotFoundException(NotFoundException ex) {
         var errorResponse = new ErroResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), null);
+        log.error("NotFoundException: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
@@ -29,6 +33,7 @@ public class GlobalExceptionHandler {
         });
 
         var errorResponse = new ErroResponse(HttpStatus.BAD_REQUEST.value(), "Error Validation failed", errors);
+        log.error("MethodArgumentNotValidException: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }

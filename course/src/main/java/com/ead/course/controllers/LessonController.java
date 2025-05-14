@@ -24,7 +24,9 @@ import com.ead.course.services.ModuleService;
 import com.ead.course.specifications.SpecificationTemplate;
 
 import jakarta.validation.Valid;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @RestController
 public class LessonController {
 
@@ -37,6 +39,7 @@ public class LessonController {
         @PostMapping("/modules/{moduleId}/lessons")
         public ResponseEntity<Object> saveLesson(@PathVariable(value = "moduleId") UUID moduleId,
                         @RequestBody @Valid LessonRecordDto lessonRecordDto) {
+                log.debug("POST saveLesson moduleId received {}", moduleId);
                 return ResponseEntity.status(HttpStatus.CREATED)
                                 .body(lessonService.save(moduleService.findByID(moduleId).get(), lessonRecordDto));
         }
@@ -69,6 +72,7 @@ public class LessonController {
         public ResponseEntity<Object> deleteLesson(@PathVariable(value = "moduleId") UUID moduleId,
                         @PathVariable(value = "lessonId") UUID lessonId) {
                 lessonService.delete(lessonService.findLessonsIntoModule(moduleId, lessonId).get());
+                log.debug("DELETE deleteLesson lessonId {} for module {}", lessonId, moduleId);
                 return ResponseEntity.status(HttpStatus.OK).body("Lesson deleted successfully");
         }
 
@@ -76,6 +80,7 @@ public class LessonController {
         public ResponseEntity<Object> updateLesson(@PathVariable(value = "moduleId") UUID moduleId,
                         @PathVariable(value = "lessonId") UUID lessonId,
                         @RequestBody @Valid LessonRecordDto lessonRecordDto) {
+                log.debug("PUT updateLesson lessonRecordDto received {}", lessonRecordDto);                
                 return ResponseEntity.status(HttpStatus.OK)
                                 .body(lessonService.update(lessonRecordDto,
                                                 lessonService.findLessonsIntoModule(moduleId, lessonId).get()));

@@ -17,9 +17,9 @@ spring:
             ddl-auto: validate
         properties:
             hibernate:
-                use_new_id_generator_mappings: true
+                '[use_new_id_generator_mappings]': true
                 dialect: org.hibernate.dialect.MySQL8Dialect
-                format_sql: true
+                '[format_sql]': true
                 jdbc:
                     lob:
                         non-contextual-creation: true
@@ -27,3 +27,13 @@ spring:
                     generator:
                         uuid:
                             style: random
+    output:
+        ansi:
+            enabled: always # Enable ANSI colors in the console output(padrão de cores para o Windows)
+
+logging:
+    level:
+        '[com.ead]': TRACE
+        root: INFO
+        '[org.springframework]': DEBUG
+        '[org.hibernate]': INFO

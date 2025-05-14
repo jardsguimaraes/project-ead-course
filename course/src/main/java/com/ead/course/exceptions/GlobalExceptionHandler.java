@@ -14,12 +14,16 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErroResponse> handleNotFoundException(NotFoundException ex) {
         var errorResponse = new ErroResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), null);
+        log.error("NotFoundException message: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
@@ -33,6 +37,7 @@ public class GlobalExceptionHandler {
         });
 
         var errorResponse = new ErroResponse(HttpStatus.BAD_REQUEST.value(), "Error Validation failed", errors);
+        log.error("MethodArgumentNotValidException message: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
@@ -41,6 +46,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErroResponse> handlerMethodArgumentTypeMismatchException(
             MethodArgumentTypeMismatchException ex) {
         var errorResponse = new ErroResponse(HttpStatus.BAD_REQUEST.value(), "Error: Invalid ID", null);
+        log.error("MethodArgumentTypeMismatchException message: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
@@ -55,6 +61,7 @@ public class GlobalExceptionHandler {
             }
         }
         var errorResponse = new ErroResponse(HttpStatus.BAD_REQUEST.value(), "Error: Invalid enum value", erros);
+        log.error("HttpMessageNotReadableException message: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }
