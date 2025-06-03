@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.ead.authuser.dtos.UserRecordDto;
@@ -68,7 +69,7 @@ public class UserService {
         return userRepository.save(userModel);
     }
 
-    public Page<UserModel> getFindAll(UserSpec spec, Pageable pageable) {
+    public Page<UserModel> getFindAll(Specification<UserModel> spec, Pageable pageable) {
         return userRepository.findAll(spec, pageable);
     }
 
