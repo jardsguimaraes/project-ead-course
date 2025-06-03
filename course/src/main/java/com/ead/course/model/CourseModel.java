@@ -82,4 +82,8 @@ public class CourseModel extends RepresentationModel<CourseModel> implements Ser
     // temos o controle do que está sendo deletado.
     // @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<ModuleModel> modules;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private Set<CourseUserModel> usersCourses;
 }
