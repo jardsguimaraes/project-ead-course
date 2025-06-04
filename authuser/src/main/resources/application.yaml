@@ -31,6 +31,12 @@ spring:
         ansi:
             enabled: always # Enable ANSI colors in the console output(padrão de cores para o Windows)
 
+ead:
+    api:
+        url:
+            course: 'http://localhost:8082/ead-course'
+
+
 logging:
     level:
         '[com.ead]': TRACE

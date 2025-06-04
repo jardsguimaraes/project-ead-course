@@ -22,7 +22,6 @@ import com.ead.course.model.ModuleModel;
 import com.ead.course.repository.CourseReporitory;
 import com.ead.course.repository.LessonRepository;
 import com.ead.course.repository.ModuleRepository;
-import com.ead.course.specifications.SpecificationTemplate.CourseSpec;
 
 @Service
 public class CourseService {
